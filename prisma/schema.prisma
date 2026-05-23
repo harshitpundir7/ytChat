@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid()) 
+  email     String   @unique              
+  password  String                        
+  name      String?                       
+  createdAt DateTime @default(now())     
+
+  // One user can have many chat sessions
+  chatSessions ChatSession[]
+}
+
+model ChatSession {
+  id          String   @id @default(cuid())
+  userId      String                        
+  videoId     String                        // YouTube video ID (e.g., "dQw4w9WgXcQ")
+  videoTitle  String?                       // Video title (for display in history)
+  videoAuthor String?                       // Channel name
+  createdAt   DateTime @default(now())
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  sessionId String                        
+  role      String                        
+  content   String                        
+  createdAt DateTime @default(now())
+
+  session ChatSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+}
+
