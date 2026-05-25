@@ -3,6 +3,7 @@ import { z } from "zod";
 import { getUserFromRequest } from "@/lib/auth/jwt";
 import { prisma } from "@/lib/prisma";
 import { runRAGPipeline } from "@/lib/langgraph/ragPipeline";
+import type { Message } from "@prisma/client";
 
 const AskSchema = z.object({
   question: z.string().min(1, "Question cannot be empty"),
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
 
     const chatHistory = session.messages
       .reverse()
-      .map((m) => ({ role: m.role as "user" | "assistant", content: m.content }));
+      .map((m: Message) => ({ role: m.role as "user" | "assistant", content: m.content }));
  await prisma.message.create({
       data: { sessionId, role: "user", content: question },
     });
