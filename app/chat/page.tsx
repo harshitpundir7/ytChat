@@ -187,7 +187,6 @@ export default function ChatPage() {
             {(user?.name || user?.email || "U")[0].toUpperCase()}
           </div>
           <span style={{ fontSize: "13px", color: "var(--text-secondary)", display: "none" }}
-            // @ts-expect-error - inline style for responsive
             className="desktop-only">
             {user?.name || user?.email}
           </span>

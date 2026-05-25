@@ -11,7 +11,7 @@ function getPineconeClient(): Pinecone {
 
 function getEmbeddings(): HuggingFaceTransformersEmbeddings {
   return new HuggingFaceTransformersEmbeddings({
-    modelName: "Xenova/all-MiniLM-L6-v2", 
+    model: "Xenova/all-MiniLM-L6-v2",
   });
 }
 
