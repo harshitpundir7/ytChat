@@ -1,5 +1,5 @@
 import { Pinecone } from "@pinecone-database/pinecone";
-import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddings/huggingface_transformers";
+import { HuggingFaceInferenceEmbeddings } from "@langchain/community/embeddings/hf";
 import { PineconeStore } from "@langchain/pinecone";
 import { Document } from "@langchain/core/documents";
 
@@ -9,9 +9,10 @@ function getPineconeClient(): Pinecone {
   return new Pinecone({ apiKey });
 }
 
-function getEmbeddings(): HuggingFaceTransformersEmbeddings {
-  return new HuggingFaceTransformersEmbeddings({
-    model: "Xenova/all-MiniLM-L6-v2",
+function getEmbeddings(): HuggingFaceInferenceEmbeddings {
+  return new HuggingFaceInferenceEmbeddings({
+    model: "sentence-transformers/all-MiniLM-L6-v2",
+    apiKey: process.env.HUGGINGFACEHUB_API_TOKEN,
   });
 }
 
